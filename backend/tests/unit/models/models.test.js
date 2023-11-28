@@ -1,13 +1,17 @@
 // test.js
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-// const sinon = require('sinon');
+const sinon = require('sinon');
 const app = require('../../../src/server');
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Products API', function () {
+  afterEach(function () {
+    sinon.restore();
+  });
+
   it('deve listar todos os produtos', async function () {
     const res = await chai.request(app).get('/products');
     expect(res).to.have.status(200);

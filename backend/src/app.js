@@ -1,5 +1,5 @@
 const express = require('express');
-const { storeManagerModel } = require('./models');
+const { queryAllProducts } = require('./models/products.model');
 const { productsRouter } = require('./routes/products.routes');
 
 const app = express();
@@ -13,13 +13,13 @@ app.get('/', (_request, response) => {
 
 // REQUISITO 01
 app.get('/products', async (req, res) => {
-  const sortedProducts = await storeManagerModel.findAllProducts.sort((a, b) => a.id - b.id);
+  const sortedProducts = await queryAllProducts.sort((a, b) => a.id - b.id);
   return res.status(200).json(sortedProducts);
 });
 
 app.get('/products/:id', async (req, res) => {
   const productId = Number(req.params.id);
-  const store = await storeManagerModel.findAllProducts.find((p) => p.id === productId);
+  const store = await queryAllProducts.find((p) => p.id === productId);
 
   if (!store) {
     return res.status(404).json({ message: 'Product not found' });
