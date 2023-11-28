@@ -28,3 +28,10 @@ describe('dfd', function () {
 
   });
 });
+
+// arrange
+//   stub
+// act
+//   executar uma função
+// assert
+//   expect

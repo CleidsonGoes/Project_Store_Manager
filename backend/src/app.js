@@ -1,20 +1,15 @@
 const express = require('express');
 const { queryAllProducts } = require('./models/products.model');
-const { productsRouter } = require('./routes/products.routes');
+const productsRouter = require('./routes/products.routes');
 
 const app = express();
 app.use(express.json());
 app.use('/products', productsRouter);
+// app.use('/sales', salesRouter);
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.json({ status: 'Store Manager UP!' });
-});
-
-// REQUISITO 01
-app.get('/products', async (req, res) => {
-  const sortedProducts = await queryAllProducts.sort((a, b) => a.id - b.id);
-  return res.status(200).json(sortedProducts);
 });
 
 app.get('/products/:id', async (req, res) => {
