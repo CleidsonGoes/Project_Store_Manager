@@ -2,12 +2,15 @@ const productsModel = require('../models/products.model');
 
 const getAllProductsServices = async () => {
   const allProducts = await productsModel.queryAllProducts();
-  return { type: null, message: allProducts, status: 200 };
+  return { status: 200, message: allProducts };
 };
 
 const getByIdProductsServices = async (id) => {
   const byIdProduct = await productsModel.queryProductById(id);
-  return { status: 'SUCESS', data: byIdProduct };
+  if (!byIdProduct) {
+    return { status: 404, message: { message: 'Product not found' } };
+  }
+  return { status: 200, message: byIdProduct };
 };
 
 module.exports = {
