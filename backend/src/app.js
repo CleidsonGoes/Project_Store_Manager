@@ -14,15 +14,4 @@ app.get('/', (_request, response) => {
 app.use('/products', productsRouter);
 app.use('/sales', salesRouter);
 
-// app.get('/products/:id', async (req, res) => {
-//   const productId = Number(req.params.id);
-//   const store = await queryAllProducts.find((p) => p.id === productId);
-
-//   if (!store) {
-//     return res.status(404).json({ message: 'Product not found' });
-//   }
-
-//   res.status(200).json(store);
-// });
-
 module.exports = app;
