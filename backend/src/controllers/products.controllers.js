@@ -11,7 +11,14 @@ const getByIdProductsController = async (req, res) => {
   return res.status(status).json(message);
 };
 
+const createProduct = async (req, res) => {
+  const product = req.body;
+  const insertProduct = productsServices.createProduct(product);
+  return res.status(201).json(insertProduct);
+};
+
 module.exports = {
   getAllProductsController,
   getByIdProductsController,
+  createProduct,
 };
