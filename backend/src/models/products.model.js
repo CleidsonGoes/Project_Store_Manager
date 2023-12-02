@@ -13,8 +13,8 @@ const queryProductById = async (id) => {
 
 const createProduct = async (product) => {
   const { name } = product;
-  const result = await connection.execute('INSERT INTO products  (name) VALUES (?)', [name]);
-  console.log(result);
+  const [result] = await connection.execute('INSERT INTO products (name) VALUES (?)', [name]);
+  return result;
 };
 
 module.exports = {
