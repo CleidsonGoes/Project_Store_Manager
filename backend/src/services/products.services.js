@@ -16,11 +16,13 @@ const getByIdProductsServices = async (id) => {
 
 const createProduct = async (product) => {
   if (!product.name) {
-    return { status: 400, message: '"name" is required' };
+    return { status: 400, message: { message: '"name" is required' } };
   }
   const validateProduct = productSchema.validate(product);
+  console.log(validateProduct);
   if (validateProduct.error) {
-    return { status: 422, message: '"name" length must be at least 5 characters long' };
+    return {
+      status: 422, message: { message: '"name" length must be at least 5 characters long' } };
   }
   const insertProduct = await productsModel.createProduct(product);
   return { status: 201, message: { id: insertProduct.insertId, name: product.name } };
