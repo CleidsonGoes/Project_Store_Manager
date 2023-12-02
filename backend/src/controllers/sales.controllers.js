@@ -11,7 +11,15 @@ const getByIdSalesController = async (req, res) => {
   return res.status(status).json(message);
 };
 
+const createSale = async (req, res) => {
+  const sale = req.body;
+  const insertSale = await salesServices.createSale(sale);
+  const { status, message } = insertSale;
+  return res.status(status).json(message);
+};
+
 module.exports = {
   getAllSalesController,
   getByIdSalesController,
+  createSale,
 };
