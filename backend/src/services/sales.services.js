@@ -14,17 +14,22 @@ const getByIdSalesServices = async (id) => {
 };
 
 const createSale = async (sale) => {
-  if (!sale.name) {
-    return { status: 400, message: { message: '"name" is required' } };
-  }
-  // const validateProduct = productSchema.validate(product);
-  // console.log(validateProduct);
-  // if (validateProduct.error) {
-  //   return {
-  //     status: 422, message: { message: '"name" length must be at least 5 characters long' } };
-  // }
+  sale.map((sl) => {
+    if (!sl.productId) {
+      return {
+        status: 400, message: { message: '"productId" is required' },
+      };
+    }
+  });
   const insertSale = await salesModel.createSale(sale);
-  return { status: 201, message: { id: insertSale.insertId, name: sale.name } };
+  return { status: 201,
+    message: {
+      id: insertSale.insertId,
+      itemsSold: [
+        { productId: 1, quantity: 1 },
+        { productId: 2, quantity: 5 },
+      ],
+    } };
 };
 
 module.exports = {

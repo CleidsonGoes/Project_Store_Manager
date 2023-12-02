@@ -32,10 +32,26 @@ const getSalesById = async (id) => {
     id = ?
   ORDER BY
     sale_id ASC, product_id ASC;`, [id]);
+  console.log(sales);
   return camelize(sales);
+};
+
+const createSale = async (sale) => {
+  const { productId, quantity } = sale;
+  const [result] = await connection.execute(`INSERT INTO
+    sales (date)
+  VALUES (CURRENT_TIMESTAMP)
+  SET @sale_id = LAST_INSERT_ID()
+  INSERT INTO
+    sales_products (sale_id, product_id, quantity)
+  VALUES
+    (@sale_id, ?, ?)`, [productId, quantity]);
+
+  return result;
 };
 
 module.exports = {
   getAllSales,
   getSalesById,
+  createSale,
 };
