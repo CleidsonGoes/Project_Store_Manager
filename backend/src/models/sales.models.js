@@ -36,22 +36,27 @@ const getSalesById = async (id) => {
   return camelize(sales);
 };
 
-const createSale = async (sale) => {
-  const { productId, quantity } = sale;
-  const [result] = await connection.execute(`INSERT INTO
-    sales (date)
-  VALUES (CURRENT_TIMESTAMP)
-  SET @sale_id = LAST_INSERT_ID()
-  INSERT INTO
-    sales_products (sale_id, product_id, quantity)
-  VALUES
-    (@sale_id, ?, ?)`, [productId, quantity]);
-
+const createSale = async () => {
+  const [{ result }] = await connection.execute(`INSERT INTO
+    sales ()
+  VALUES ();`);
   return result;
+};
+
+const createSalesProducts = async (sales) => {
+  const idSale = await createSale();
+  const salesDone = await sales.map(({ productId, quantity }) => {
+    const [{ affectedRows }] = connection.execute(`INSERT INTO
+      sales_products (sale_id, product_id, quantity)
+    VALUES (?, ?, ?);`, [idSale, productId, quantity]);
+    return affectedRows;
+  });
+  console.log(salesDone);
+  return { id: idSale, affectedRows: salesDone.length, data: sales };
 };
 
 module.exports = {
   getAllSales,
   getSalesById,
-  createSale,
+  createSalesProducts,
 };

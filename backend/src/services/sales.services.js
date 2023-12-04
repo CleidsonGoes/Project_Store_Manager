@@ -13,27 +13,18 @@ const getByIdSalesServices = async (id) => {
   return { status: 200, message: byIdSales };
 };
 
-const createSale = async (sale) => {
-  sale.map((sl) => {
-    if (!sl.productId) {
-      return {
-        status: 400, message: { message: '"productId" is required' },
-      };
-    }
-  });
-  const insertSale = await salesModel.createSale(sale);
-  return { status: 201,
-    message: {
-      id: insertSale.insertId,
-      itemsSold: [
-        { productId: 1, quantity: 1 },
-        { productId: 2, quantity: 5 },
-      ],
-    } };
+const createSalesProducts = async (sales) => {
+  const result = await salesModel.createSalesProducts(sales);
+  const { id } = result;
+  const feedback = {
+    id,
+    itemsSold: [...sales],
+  };
+  return { status: 201, data: feedback };
 };
 
 module.exports = {
   getAllSalesServices,
   getByIdSalesServices,
-  createSale,
+  createSalesProducts,
 };

@@ -12,8 +12,8 @@ const getByIdSalesController = async (req, res) => {
 };
 
 const createSale = async (req, res) => {
-  const sale = req.body;
-  const insertSale = await salesServices.createSale(sale);
+  const sales = req.body;
+  const insertSale = await salesServices.createSalesProducts(sales);
   const { status, message } = insertSale;
   return res.status(status).json(message);
 };
