@@ -22,7 +22,6 @@ const updateProduct = async (req, res) => {
   const { id } = req.params;
   const product = req.body;
   const updateProd = await productsServices.updateProduct(id, product);
-  console.log(updateProd);
   const { status, message } = updateProd;
   return res.status(status).json(message);
 };

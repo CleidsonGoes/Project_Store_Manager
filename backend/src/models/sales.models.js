@@ -36,23 +36,17 @@ const getSalesById = async (id) => {
   return camelize(sales);
 };
 
-const createSale = async () => {
-  const [{ result }] = await connection.execute(`INSERT INTO
-    sales ()
-  VALUES ();`);
-  return result;
-};
-
 const createSalesProducts = async (sales) => {
-  const idSale = await createSale();
-  const salesDone = await sales.map(({ productId, quantity }) => {
-    const [{ affectedRows }] = connection.execute(`INSERT INTO
+  const [{ insertId }] = await connection.execute(`INSERT INTO
+    sales (date)
+  VALUES (NOW());`);
+  
+  await Promise.all(sales.map(async (sale) => {
+    const [{ salesDB }] = await connection.execute(`INSERT INTO
       sales_products (sale_id, product_id, quantity)
-    VALUES (?, ?, ?);`, [idSale, productId, quantity]);
-    return affectedRows;
-  });
-  console.log(salesDone);
-  return { id: idSale, affectedRows: salesDone.length, data: sales };
+    VALUES (?, ?, ?);`, [insertId, sale.productId, sale.quantity]);
+    return salesDB;
+  }));
 };
 
 const deleteSale = async (id) => {

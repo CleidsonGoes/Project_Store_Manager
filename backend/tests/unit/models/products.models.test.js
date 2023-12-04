@@ -33,9 +33,11 @@ describe('Products API', function () {
     expect(result).to.be.deep.equal(mocks.getByIdProducts);
   });
 
-  it('não deve listar um produto inexistente', async function () {
-    // const res = await chai.request(app).get('/products/999');
-    // expect(res).to.have.status(404);
-    // expect(res.body).to.deep.equal({ message: 'Product not found' });
+  it('Testando criação de produtos', async function () {
+    sinon.stub(connection, 'execute').resolves([1]);
+
+    const resulted = await model.createProduct(mocks.insertProduct);
+    
+    expect(resulted).to.be.equal(1);
   });
 });

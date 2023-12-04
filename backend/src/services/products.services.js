@@ -40,8 +40,9 @@ const updateProduct = async (id, product) => {
     return {
       status: 422, message: { message: '"name" length must be at least 5 characters long' } };
   }
-  const updateProd = await productsModel.updateProduct(product);
-  return { status: 200, message: { id: updateProd.insertId, name: product.name } };
+  const updateProd = await productsModel.updateProduct(id, product);
+  console.log(updateProd, 'log do updateProd');
+  return { status: 200, message: { id: updateProd, name: product.name } };
 };
 
 const deleteProduct = async (id) => {

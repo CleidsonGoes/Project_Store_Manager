@@ -29,8 +29,13 @@ const getAllSales = [
   },
 ];
 
+const insertProduct = {
+  name: 'ProdutoX',
+};
+
 module.exports = {
   getAllProducts,
   getByIdProducts,
   getAllSales,
+  insertProduct,
 };
