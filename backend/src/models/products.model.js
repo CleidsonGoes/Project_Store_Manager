@@ -17,10 +17,11 @@ const createProduct = async (product) => {
   return result;
 };
 
-const updateProduct = async (product) => {
+const updateProduct = async (id, product) => {
   const { name } = product;
-  const [result] = await connection.execute('', [name]);
-  return result;
+  const queryDB = 'UPDATE products SET name = ? WHERE id = ?';
+  const [{ affectedRows }] = await connection.execute(queryDB, [name, id]);
+  return affectedRows;
 };
 
 const deleteProduct = async (id) => {

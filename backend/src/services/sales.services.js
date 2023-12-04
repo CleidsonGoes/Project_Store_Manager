@@ -23,8 +23,18 @@ const createSalesProducts = async (sales) => {
   return { status: 201, data: feedback };
 };
 
+const deleteSale = async (id) => {
+  const byIdSales = await salesModel.getSalesById(id);
+  if (!byIdSales) {
+    return { status: 404, message: { message: 'Sale not found' } };
+  }
+  await salesModel.deleteSale(id);
+  return { status: 204 };
+};
+
 module.exports = {
   getAllSalesServices,
   getByIdSalesServices,
   createSalesProducts,
+  deleteSale,
 };

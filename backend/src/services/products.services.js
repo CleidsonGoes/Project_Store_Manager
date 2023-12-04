@@ -27,7 +27,11 @@ const createProduct = async (product) => {
   return { status: 201, message: { id: insertProduct.insertId, name: product.name } };
 };
 
-const updateProduct = async (product) => {
+const updateProduct = async (id, product) => {
+  const productExist = await productsModel.queryProductById(id);
+  if (!productExist) {
+    return { status: 404, message: { message: 'Product not found' } };
+  }
   if (!product.name) {
     return { status: 400, message: { message: '"name" is required' } };
   }
@@ -37,7 +41,7 @@ const updateProduct = async (product) => {
       status: 422, message: { message: '"name" length must be at least 5 characters long' } };
   }
   const updateProd = await productsModel.updateProduct(product);
-  return { status: 201, message: { id: updateProd.insertId, name: product.name } };
+  return { status: 200, message: { id: updateProd.insertId, name: product.name } };
 };
 
 const deleteProduct = async (id) => {

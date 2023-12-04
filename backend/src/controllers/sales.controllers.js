@@ -18,8 +18,16 @@ const createSale = async (req, res) => {
   return res.status(status).json(message);
 };
 
+const deleteSale = async (req, res) => {
+  const { id } = req.params;
+  const delSale = await salesServices.deleteSale(id);
+  const { status, message } = delSale;
+  return res.status(status).json(message);
+};
+
 module.exports = {
   getAllSalesController,
   getByIdSalesController,
   createSale,
+  deleteSale,
 };
