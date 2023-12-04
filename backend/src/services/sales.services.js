@@ -15,12 +15,12 @@ const getByIdSalesServices = async (id) => {
 
 const createSalesProducts = async (sales) => {
   const result = await salesModel.createSalesProducts(sales);
-  const { id } = result;
+  console.log(result, 'log do result');
   const feedback = {
-    id,
+    id: result.id,
     itemsSold: [...sales],
   };
-  return { status: 201, data: feedback };
+  return { status: 201, message: feedback };
 };
 
 const deleteSale = async (id) => {

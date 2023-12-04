@@ -42,11 +42,11 @@ const createSalesProducts = async (sales) => {
   VALUES (NOW());`);
   
   await Promise.all(sales.map(async (sale) => {
-    const [{ salesDB }] = await connection.execute(`INSERT INTO
+    await connection.execute(`INSERT INTO
       sales_products (sale_id, product_id, quantity)
     VALUES (?, ?, ?);`, [insertId, sale.productId, sale.quantity]);
-    return salesDB;
   }));
+  return { id: insertId, itemsSold: sales };
 };
 
 const deleteSale = async (id) => {
