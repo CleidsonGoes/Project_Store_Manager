@@ -21,7 +21,7 @@ const updateProduct = async (id, product) => {
   const { name } = product;
   const queryDB = 'UPDATE products SET name = ? WHERE id = ?';
   const [{ affectedRows }] = await connection.execute(queryDB, [name, id]);
-  console.log(affectedRows, 'resultado updateProduct');
+  // console.log(affectedRows, 'resultado updateProduct');
   return affectedRows;
 };
 

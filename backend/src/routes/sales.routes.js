@@ -9,9 +9,9 @@ salesRouter.get('/', salesControllers.getAllSalesController);
 salesRouter.get('/:id', salesControllers.getByIdSalesController);
 salesRouter.post(
   '/', 
+  fieldQuantityEqualZero, 
   notFoundFieldProductId, 
   notFoundFieldQuantity,
-  fieldQuantityEqualZero, 
   salesControllers.createSale,
 );
 salesRouter.delete('/:id', salesControllers.deleteSale);

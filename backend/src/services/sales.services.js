@@ -1,5 +1,4 @@
-// const { notFoundFieldProductId, notFoundFieldQuantity, 
-//   fieldQuantityEqualZero } = require('../middlewares/sales.middlewares');
+const { queryAllProducts } = require('../models/products.model');
 const salesModel = require('../models/sales.models');
 
 const getAllSalesServices = async () => {
@@ -16,9 +15,16 @@ const getByIdSalesServices = async (id) => {
 };
 
 const createSalesProducts = async (sales) => {
-  // await notFoundFieldProductId(sales);
-  // await notFoundFieldQuantity(sales);
-  // await fieldQuantityEqualZero(sales);
+  const idProductsCreated = sales.map((sale) => sale.productId);
+  // console.log(idProductsCreated, 'log dos ids parametro sales');
+  const products = await queryAllProducts();
+  const allProduct = products.map((product) => product.id);
+  // console.log(allProduct, 'ids do produtos no BD');
+  const verifyIdProduct = idProductsCreated.every((idProduct) => allProduct.includes(idProduct));
+  // console.log(verifyIdProduct, 'confirmação se os IDs dos produtos req. estão presentes no BD');
+  if (!verifyIdProduct) {
+    return { status: 404, message: { message: 'Product not found' } };
+  }
   const result = await salesModel.createSalesProducts(sales);
   console.log(result, 'log do result');
   const feedback = {
@@ -43,3 +49,15 @@ module.exports = {
   createSalesProducts,
   deleteSale,
 };
+
+// const products = await queryAllProducts();
+// const allProduct = products.map((product) => product.id);
+// console.log(allProduct, 'ids do produtos no BD');
+// const result = await salesModel.createSalesProducts(sales);
+// const idProductsCreated = result.itemsSold.map((productCreated) => productCreated.productId);
+// console.log(idProductsCreated, 'ids dos produtos das vendas feitas');
+// const verifyIdProduct = idProductsCreated.some((idProduct) => allProduct.includes(idProduct));
+// console.log(verifyIdProduct, 'log para saber existência dos ids no BD');
+// if (!verifyIdProduct) {
+//   return { status: 400, message: { message: 'Product not found' } };
+// }
