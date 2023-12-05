@@ -1,3 +1,5 @@
+// const { notFoundFieldProductId, notFoundFieldQuantity, 
+//   fieldQuantityEqualZero } = require('../middlewares/sales.middlewares');
 const salesModel = require('../models/sales.models');
 
 const getAllSalesServices = async () => {
@@ -14,6 +16,9 @@ const getByIdSalesServices = async (id) => {
 };
 
 const createSalesProducts = async (sales) => {
+  // await notFoundFieldProductId(sales);
+  // await notFoundFieldQuantity(sales);
+  // await fieldQuantityEqualZero(sales);
   const result = await salesModel.createSalesProducts(sales);
   console.log(result, 'log do result');
   const feedback = {
