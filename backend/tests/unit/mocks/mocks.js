@@ -33,9 +33,14 @@ const insertProduct = {
   name: 'ProdutoX',
 };
 
+const ReqUpdateProduct = {
+  name: 'Martelo do Batman',
+};
+
 module.exports = {
   getAllProducts,
   getByIdProducts,
   getAllSales,
   insertProduct,
+  ReqUpdateProduct,
 };

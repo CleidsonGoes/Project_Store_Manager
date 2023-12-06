@@ -30,6 +30,7 @@ const deleteProduct = async (req, res) => {
   const { id } = req.params;
   const delProduct = await productsServices.deleteProduct(id);
   const { status, message } = delProduct;
+  console.log(message, 'log da mensagem');
   return res.status(status).json(message);
 };
 

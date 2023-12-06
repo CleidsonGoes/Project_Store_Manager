@@ -8,11 +8,11 @@ const services = require('../../../src/services/products.services');
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('Testando a camada de serviço', function () {
+describe('Testando camada Service', function () {
   afterEach(function () {
     sinon.restore();
   });
-  it('Testando get all products', async function () {
+  it('Deve listar dos produtos, rota GET', async function () {
     // arrange
     sinon.stub(models, 'queryAllProducts').resolves(mocks.getAllProducts);
     // act
@@ -21,7 +21,7 @@ describe('Testando a camada de serviço', function () {
     expect(result.message).to.be.deep.equal(mocks.getAllProducts);
     expect(result.status).to.be.deep.equal(200);
   });
-  it('Testando get by Id products', async function () {
+  it('Testando consulta produto por ID, rota GET', async function () {
     // arrange
     sinon.stub(models, 'queryProductById').resolves(mocks.getByIdProducts);
     // act
@@ -29,6 +29,14 @@ describe('Testando a camada de serviço', function () {
     // assert
     expect(result.message).to.be.deep.equal(mocks.getByIdProducts);
     expect(result.status).to.be.deep.equal(200);
+  });
+  it('Testando remoção de produto, rota DELETE/id', async function () {
+    sinon.stub(models, 'queryProductById').resolves(mocks.getByIdProducts);
+    sinon.stub(models, 'deleteProduct').resolves(1);
+
+    const result = await services.deleteProduct(1);
+
+    expect(result.status).to.be.deep.equal(204);
   });
 });
 
