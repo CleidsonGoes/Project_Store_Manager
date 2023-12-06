@@ -21,7 +21,7 @@ describe('Testando camada Model', function () {
     expect(result).to.be.lengthOf(2);
   });
   
-  it('deve listar um produto específico, rota GET', async function () {
+  it('deve listar um produto específico, rota GET/id', async function () {
     // arrange - o que preciso fazer para o meu teste funcionar (mocks, stubs)
     sinon.stub(connection, 'execute').resolves([[mocks.getByIdProducts]]);
     // act - ação de executar a função que eu estou testando
@@ -30,20 +30,21 @@ describe('Testando camada Model', function () {
     expect(result).to.be.deep.equal(mocks.getByIdProducts);
   });
 
-  it('Testando criação de produtos', async function () {
+  it('Testando criação de produtos, rota POST', async function () {
     sinon.stub(connection, 'execute').resolves([1]);
 
     const resulted = await productModel.createProduct(mocks.insertProduct);
     
     expect(resulted).to.be.equal(1);
   });
-  // it('Testando atualização de produtos rota PUT/id', async function () {
-  //   sinon.stub(connection, 'execute').resolves([[mocks.ReqUpdateProduct]]);
+  it('Testando atualização de produtos rota PUT/id', async function () {
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
 
-  //   const result = await productModel.updateProduct(productModel.updateProduct(1, 'Martelo do Batman'));
+    const result = await productModel.updateProduct(1, mocks.ReqUpdateProduct);
 
-  //   expect(result).to.be.deep.equal({ id: 1, name: 'Martelo do Batman' });
-  // });
+    expect(result).to.be.equal(1);
+    expect(result).to.be.an('number');
+  });
   it('Testando remoção de produto, rota DELETE/id', async function () {
     sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
 

@@ -12,7 +12,7 @@ describe('Testando camada Service', function () {
   afterEach(function () {
     sinon.restore();
   });
-  it('Deve listar dos produtos, rota GET', async function () {
+  it('Deve listar todos produtos, rota GET', async function () {
     // arrange
     sinon.stub(models, 'queryAllProducts').resolves(mocks.getAllProducts);
     // act
@@ -21,7 +21,7 @@ describe('Testando camada Service', function () {
     expect(result.message).to.be.deep.equal(mocks.getAllProducts);
     expect(result.status).to.be.deep.equal(200);
   });
-  it('Testando consulta produto por ID, rota GET', async function () {
+  it('Testando consulta produto por ID, rota GET/id', async function () {
     // arrange
     sinon.stub(models, 'queryProductById').resolves(mocks.getByIdProducts);
     // act
@@ -29,6 +29,15 @@ describe('Testando camada Service', function () {
     // assert
     expect(result.message).to.be.deep.equal(mocks.getByIdProducts);
     expect(result.status).to.be.deep.equal(200);
+  });
+  it('Testando consulta produto por ID não encontrado, rota GET/id', async function () {
+    // arrange
+    sinon.stub(models, 'queryProductById').resolves();
+
+    const result = await services.getByIdProductsServices(999);
+
+    expect(result.message).to.be.deep.equal({ message: 'Product not found' });
+    expect(result.status).to.be.equal(404);
   });
   it('Testando remoção de produto, rota DELETE/id', async function () {
     sinon.stub(models, 'queryProductById').resolves(mocks.getByIdProducts);

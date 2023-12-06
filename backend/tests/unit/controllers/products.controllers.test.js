@@ -12,7 +12,7 @@ describe('Testando camada Controller', function () {
   afterEach(function () {
     sinon.restore();
   });
-  it('Deve listar dos produtos, rota GET', async function () {
+  it('Deve listar todos produtos, rota GET', async function () {
     // arrange
     const req = {};
     const res = {};
@@ -26,6 +26,22 @@ describe('Testando camada Controller', function () {
     // assert
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(mocks.getAllProducts);
+  });
+  it('Deve testar consulta de um produto específico, rota GET/id', async function () {
+    const res = {};
+    const req = {
+      params: { id: 1 },
+    };
+
+    res.status = sinon.stub().returnsThis();
+    res.json = sinon.stub();
+
+    sinon.stub(services, 'getByIdProductsServices').resolves({ status: 200, message: mocks.getByIdProducts });
+
+    await controllers.getByIdProductsController(req, res);
+
+    expect(res.status).to.be.calledWith(200);
+    expect(res.json).to.be.calledWith(mocks.getByIdProducts);
   });
   it('Testando remoção de produto, rota DELETE/id', async function () {
     const req = { params: { id: 1 } };
