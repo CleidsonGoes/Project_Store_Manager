@@ -33,7 +33,7 @@ const insertProduct = {
   name: 'ProdutoX',
 };
 
-const ReqUpdateProduct = {
+const reqUpdateProduct = {
   name: 'Martelo do Batman',
 };
 
@@ -42,5 +42,5 @@ module.exports = {
   getByIdProducts,
   getAllSales,
   insertProduct,
-  ReqUpdateProduct,
+  reqUpdateProduct,
 };

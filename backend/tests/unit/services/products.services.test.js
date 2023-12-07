@@ -39,6 +39,15 @@ describe('Testando camada Service', function () {
     expect(result.message).to.be.deep.equal({ message: 'Product not found' });
     expect(result.status).to.be.equal(404);
   });
+  it('Testando atualização de produtos rota PUT/id', async function () {
+    sinon.stub(models, 'queryProductById').resolves([[mocks.getByIdProducts]]);
+    sinon.stub(models, 'updateProduct').resolves([{ affectedRows: 1 }]);
+
+    const result = await services.updateProduct(1, mocks.reqUpdateProduct);
+
+    expect(result.status).to.be.deep.equal(200);
+    expect(result.message).to.be.deep.equal({ id: [{ affectedRows: 1 }], name: mocks.reqUpdateProduct.name });
+  });
   it('Testando remoção de produto, rota DELETE/id', async function () {
     sinon.stub(models, 'queryProductById').resolves(mocks.getByIdProducts);
     sinon.stub(models, 'deleteProduct').resolves(1);

@@ -43,6 +43,22 @@ describe('Testando camada Controller', function () {
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.calledWith(mocks.getByIdProducts);
   });
+  it('Testando atualização de produtos rota PUT/id', async function () {
+    const req = { params: {
+      id: 1,
+      body: mocks.reqUpdateProduct,
+    } };
+    const res = {};
+
+    res.status = sinon.stub().returnsThis();
+    res.json = sinon.stub();
+    sinon.stub(services, 'updateProduct').resolves({ status: 200, message: { id: 1, name: mocks.reqUpdateProduct.name } });
+
+    await controllers.updateProduct(req, res);
+
+    expect(res.status).to.be.calledWith(200);
+    expect(res.json).to.be.calledWith({ id: 1, name: mocks.reqUpdateProduct.name });
+  });
   it('Testando remoção de produto, rota DELETE/id', async function () {
     const req = { params: { id: 1 } };
     const res = {};
