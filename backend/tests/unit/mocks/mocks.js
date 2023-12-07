@@ -49,10 +49,6 @@ const createdSales = {
       productId: 1,
       quantity: 1,
     },
-    {
-      productId: 2,
-      quantity: 5,
-    },
   ],
 };
 
@@ -60,10 +56,6 @@ const reqCreateSales = [
   {
     productId: 1,
     quantity: 1,
-  },
-  {
-    productId: 2,
-    quantity: 5,
   },
 ];
 const insertProduct = {

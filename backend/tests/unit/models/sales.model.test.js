@@ -39,14 +39,16 @@ describe('Sales API', function () {
   //   // expect(res.body).to.deep.equal({ message: 'Product not found' });
   // });
 
-  // it('Testando criação de vendas, rota POST/sales', async function () {
-  //   sinon.stub(connection, 'execute').resolves(mocks.createdSales);
-
-  //   const result = await model.createSalesProducts(mocks.reqCreateSales);
+  it('Testando criação de vendas, rota POST/sales', async function () {
+    sinon.stub(connection, 'execute')
+      .onFirstCall()
+      .resolves([{ insertId: 3 }])
+      .onSecondCall()
+      .resolves(mocks.reqCreateSales);
+    const result = await model.createSalesProducts(mocks.reqCreateSales);
     
-  //   expect(result).to.be.equal(mocks.createdSales);
-  // });
-
+    expect(result).to.be.deep.equal(mocks.createdSales);
+  });
   it('Testando remoção de venda, rota DELETE/id', async function () {
     sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
 
