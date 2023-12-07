@@ -32,7 +32,7 @@ const getSalesById = async (id) => {
     id = ?
   ORDER BY
     sale_id ASC, product_id ASC;`, [id]);
-  console.log(sales);
+  // console.log(sales);
   return camelize(sales);
 };
 
