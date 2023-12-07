@@ -40,7 +40,7 @@ describe('Testando camada Model', function () {
   it('Testando atualização de produtos rota PUT/id', async function () {
     sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
 
-    const result = await productModel.updateProduct(1, mocks.ReqUpdateProduct);
+    const result = await productModel.updateProduct(1, mocks.reqUpdateProduct);
 
     expect(result).to.be.equal(1);
     expect(result).to.be.an('number');
