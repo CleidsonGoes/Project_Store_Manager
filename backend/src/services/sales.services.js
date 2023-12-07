@@ -26,7 +26,7 @@ const createSalesProducts = async (sales) => {
     return { status: 404, message: { message: 'Product not found' } };
   }
   const result = await salesModel.createSalesProducts(sales);
-  console.log(result, 'log do result');
+  // console.log(result, 'log do result');
   const feedback = {
     id: result.id,
     itemsSold: [...sales],
