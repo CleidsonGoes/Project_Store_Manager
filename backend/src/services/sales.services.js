@@ -36,7 +36,7 @@ const createSalesProducts = async (sales) => {
 
 const deleteSale = async (id) => {
   const byIdSales = await salesModel.getSalesById(id);
-  if (!byIdSales) {
+  if (byIdSales.length === 0) {
     return { status: 404, message: { message: 'Sale not found' } };
   }
   await salesModel.deleteSale(id);
