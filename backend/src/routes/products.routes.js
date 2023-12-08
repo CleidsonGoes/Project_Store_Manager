@@ -1,6 +1,5 @@
 const express = require('express');
 const productsControllers = require('../controllers/products.controllers');
-// const checkingField = require('../middlewares/products.middlewares');
 
 const productsRouter = express.Router();
 
