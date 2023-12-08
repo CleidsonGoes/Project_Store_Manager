@@ -67,7 +67,7 @@ const reqUpdateProduct = {
 };
 
 const reqUpdateQuantityProduct = {
-  quantity: 20,
+  quantity: 40,
 };
 
 const resUpdatedQuantityProduct = {
@@ -76,6 +76,13 @@ const resUpdatedQuantityProduct = {
   quantity: 20,
   saleId: 1,
 };
+
+const resSearchProduct = [
+  {
+    id: 1,
+    name: 'Martelo de Thor',
+  },
+];
 
 module.exports = {
   getAllProducts,
@@ -88,4 +95,5 @@ module.exports = {
   reqCreateSales,
   reqUpdateQuantityProduct,
   resUpdatedQuantityProduct,
+  resSearchProduct,
 };

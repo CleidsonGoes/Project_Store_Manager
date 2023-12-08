@@ -64,6 +64,22 @@ describe('Testando camada Service', function () {
 
     expect(result.status).to.be.deep.equal(204);
   });
+  it('Testando pesquisa por produto, rota GET/search', async function () {
+    sinon.stub(models, 'searchProduct').resolves(mocks.resSearchProduct);
+
+    const result = await services.searchProduct('Martelo');
+
+    expect(result.status).to.be.deep.equal(200);
+    expect(result.message).to.be.deep.equal(mocks.resSearchProduct);
+  });
+  it('Testando pesquisa por produto inexistente, rota GET/search', async function () {
+    sinon.stub(models, 'searchProduct').resolves([]);
+
+    const result = await services.searchProduct('zzzzz');
+
+    expect(result.status).to.be.deep.equal(200);
+    expect(result.message).to.be.deep.equal([]);
+  });
 });
 
 // arrange

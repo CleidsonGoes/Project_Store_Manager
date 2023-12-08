@@ -56,7 +56,6 @@ const updateQuantitySale = async (productId, quantity, saleId) => {
     return { status: 404, message: { message: 'Product not found in sale' } };
   }
   const saleExist = await salesModel.getSalesById(saleId);
-  console.log(saleExist, 'log da venda pega por ID');
   if (!saleExist.length) {
     return { status: 404, message: { message: 'Sale not found' } };
   }

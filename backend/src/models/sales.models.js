@@ -79,5 +79,6 @@ module.exports = {
   getSalesById,
   createSalesProducts,
   deleteSale,
+  updateQuantitySale,
   queryUpdateQuantityProduct,
 };

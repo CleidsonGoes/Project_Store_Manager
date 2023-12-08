@@ -39,4 +39,18 @@ describe('Testando camada Service', function () {
 
     expect(result.status).to.be.deep.equal(204);
   });
+  it('Testando atualização de qtd vendidas, rota /:saleId/products/:productId/quantity', async function () {
+    sinon.stub(models, 'queryUpdateQuantityProduct').resolves(mocks.resUpdatedQuantityProduct);
+
+    const result = await services.updateQuantitySale(2, 20, 1);
+
+    expect(result.status).to.be.deep.equal(200);
+    expect(result.message).to.be.deep.equal(mocks.resUpdatedQuantityProduct);
+  });
+  it('Testando atualização de qtd maior ou igual a 1', async function () {
+    const result = await services.updateQuantitySale(2, 0, 1);
+    
+    expect(result.status).to.be.deep.equal(422);
+    expect(result.message).to.be.deep.equal({ message: '"quantity" must be greater than or equal to 1' });
+  });
 });

@@ -57,4 +57,16 @@ describe('Sales API', function () {
     expect(result).to.be.equal(1);
     expect(result).to.be.an('number');
   });
+  // it('Testando atualização de qtd vendidas, rota /:saleId/products/:productId/quantity', async function () {    
+  //   const result = await model.updateQuantitySale(1, 20);
+
+  //   expect(result).to.be.been.calledWith();
+  // });
+  it('Testando consulta da atualização de qtd, rota /:saleId/products/:productId/quantity', async function () {
+    sinon.stub(connection, 'execute').resolves([[1]]);
+
+    const result = await model.queryUpdateQuantityProduct(1, 2);
+
+    expect(result).to.be.equal(1);
+  });
 });
