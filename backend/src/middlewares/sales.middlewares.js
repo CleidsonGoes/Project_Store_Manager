@@ -1,15 +1,3 @@
-// function authenticateToken(req, res, next) {
-//   console.log('agora aqui');
-//   const token = req.headers.authorization;
-//   if (!token) {
-//     return res.status(401).json({ message: 'Token não encontrado' });
-//   }
-//   if (token.length !== 16 || typeof token !== 'string') {
-//     return res.status(401).json({ message: 'Token inválido' });
-//   }
-//   next();
-// }
-
 const notFoundFieldProductId = (req, res, next) => {
   const sales = req.body;
   const existProductId = sales.some((sale) => sale.productId);

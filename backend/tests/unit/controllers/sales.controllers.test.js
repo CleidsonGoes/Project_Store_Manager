@@ -28,6 +28,20 @@ describe('Testando camada Controller', function () {
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.calledWith(mocks.getByIdSales);
   });
+  it('Testando criação de vendas, rota POST/sales', async function () {
+    const req = { body: mocks.reqCreateSales };
+    const res = {};
+
+    res.status = sinon.stub().returnsThis();
+    res.json = sinon.stub();
+    sinon.stub(services, 'createSalesProducts').resolves({ status: 201, message: mocks.createdSales });
+
+    await controllers.createSale(req, res);
+
+    expect(res.status).to.be.calledWith(201);
+    expect(res.json).to.be.calledWith(mocks.createdSales);
+  });
+
   it('Testando remoção de venda, rota DELETE/id', async function () {
     const req = { params: { id: 1 } };
     const res = {};
