@@ -7,6 +7,7 @@ const getAllProductsServices = async () => {
 };
 
 const getByIdProductsServices = async (id) => {
+  console.log(id, 'log do id');
   const byIdProduct = await productsModel.queryProductById(id);
   if (!byIdProduct) {
     return { status: 404, message: { message: 'Product not found' } };
@@ -53,10 +54,25 @@ const deleteProduct = async (id) => {
   return { status: 204 };
 };
 
+const searchProduct = async (searchTerm) => {
+  if (!searchTerm) {
+    const allProducts = await productsModel.queryAllProducts();
+    return { status: 200, message: allProducts };
+  }
+  const localizeProduct = await productsModel.searchProduct(searchTerm);
+  const allUndefined = localizeProduct.every((product) => product === undefined);
+  const arrayEmpy = allUndefined ? [] : localizeProduct;
+  if (arrayEmpy === localizeProduct) {
+    return { status: 200, message: localizeProduct };
+  }
+  return { status: 200, message: [] };
+};
+
 module.exports = {
   getAllProductsServices,
   getByIdProductsServices,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };
