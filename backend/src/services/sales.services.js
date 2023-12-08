@@ -1,5 +1,6 @@
 const { queryAllProducts } = require('../models/products.model');
 const salesModel = require('../models/sales.models');
+const productModel = require('../models/products.model');
 
 const getAllSalesServices = async () => {
   const allSales = await salesModel.getAllSales();
@@ -43,9 +44,27 @@ const deleteSale = async (id) => {
   return { status: 204 };
 };
 
+const updateQuantitySale = async (productId, quantity) => {
+  const productExist = await productModel.queryProductById(productId);
+  if (!productExist) {
+    return { status: 404, message: { message: 'Product not found' } };
+  }
+  // if (!product.name) {
+  //   return { status: 400, message: { message: '"name" is required' } };
+  // }
+  // const validateProduct = productSchema.validate(product);
+  // if (validateProduct.error) {
+  //   return {
+  //     status: 422, message: { message: '"name" length must be at least 5 characters long' } };
+  // }
+  await salesModel.queryUpdateQuantityProduct(productId, quantity);
+  return { status: 200, message: { id: productId, name: quantity } };
+};
+
 module.exports = {
   getAllSalesServices,
   getByIdSalesServices,
   createSalesProducts,
   deleteSale,
+  updateQuantitySale,
 };

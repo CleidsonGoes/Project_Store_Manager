@@ -8,12 +8,13 @@ const salesRouter = express.Router();
 salesRouter.get('/', salesControllers.getAllSalesController);
 salesRouter.get('/:id', salesControllers.getByIdSalesController);
 salesRouter.post(
-  '/', 
-  fieldQuantityEqualZero, 
-  notFoundFieldProductId, 
+  '/',
+  fieldQuantityEqualZero,
+  notFoundFieldProductId,
   notFoundFieldQuantity,
   salesControllers.createSale,
 );
 salesRouter.delete('/:id', salesControllers.deleteSale);
+salesRouter.put('/:saleId/products/:productId/quantity', salesControllers.updateQuantitySale);
 
 module.exports = salesRouter;

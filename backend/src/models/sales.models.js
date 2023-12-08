@@ -54,9 +54,32 @@ const deleteSale = async (id) => {
   return affectedRows;
 };
 
+const updateQuantitySale = async (productId, quantity) => {
+  console.log(productId, 'log do params productId');
+  console.log(quantity, 'log do quantity do body');
+  const query = 'UPDATE sales_products SET quantity = ? WHERE product_id = ?;';
+  await connection.execute(query, [quantity, productId]);
+};
+
+const queryUpdateQuantityProduct = async (productId, quantity) => {
+  await updateQuantitySale(productId, quantity);
+  const query = `SELECT
+      s.date AS date,
+      sp.product_id AS product_Id,
+      sp.quantity AS quantity,
+      sp.sale_id AS sale_id
+    FROM sales_products sp
+    JOIN sales s ON sp.sale_id = s.id
+    WHERE sp.product_id = ?;`;
+  const [[affectedRows]] = await connection.execute(query, [productId]);
+  console.log(affectedRows, 'log da affectedRows do updateQuantity');
+  return affectedRows;
+};
+
 module.exports = {
   getAllSales,
   getSalesById,
   createSalesProducts,
   deleteSale,
+  queryUpdateQuantityProduct,
 };
