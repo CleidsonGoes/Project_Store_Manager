@@ -44,21 +44,24 @@ const deleteSale = async (id) => {
   return { status: 204 };
 };
 
-const updateQuantitySale = async (productId, quantity) => {
+const updateQuantitySale = async (productId, quantity, saleId) => {
+  if (quantity <= 0) {
+    return { status: 422, message: { message: '"quantity" must be greater than or equal to 1' } };
+  }
+  if (!quantity) {
+    return { status: 400, message: { message: '"quantity" is required' } };
+  }
   const productExist = await productModel.queryProductById(productId);
   if (!productExist) {
-    return { status: 404, message: { message: 'Product not found' } };
+    return { status: 404, message: { message: 'Product not found in sale' } };
   }
-  // if (!product.name) {
-  //   return { status: 400, message: { message: '"name" is required' } };
-  // }
-  // const validateProduct = productSchema.validate(product);
-  // if (validateProduct.error) {
-  //   return {
-  //     status: 422, message: { message: '"name" length must be at least 5 characters long' } };
-  // }
-  await salesModel.queryUpdateQuantityProduct(productId, quantity);
-  return { status: 200, message: { id: productId, name: quantity } };
+  const saleExist = await salesModel.getSalesById(saleId);
+  console.log(saleExist, 'log da venda pega por ID');
+  if (!saleExist.length) {
+    return { status: 404, message: { message: 'Sale not found' } };
+  }
+  const affectedRows = await salesModel.queryUpdateQuantityProduct(productId, quantity);
+  return { status: 200, message: affectedRows };
 };
 
 module.exports = {

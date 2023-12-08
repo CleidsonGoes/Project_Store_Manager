@@ -55,8 +55,6 @@ const deleteSale = async (id) => {
 };
 
 const updateQuantitySale = async (productId, quantity) => {
-  console.log(productId, 'log do params productId');
-  console.log(quantity, 'log do quantity do body');
   const query = 'UPDATE sales_products SET quantity = ? WHERE product_id = ?;';
   await connection.execute(query, [quantity, productId]);
 };
@@ -73,7 +71,7 @@ const queryUpdateQuantityProduct = async (productId, quantity) => {
     WHERE sp.product_id = ?;`;
   const [[affectedRows]] = await connection.execute(query, [productId]);
   console.log(affectedRows, 'log da affectedRows do updateQuantity');
-  return affectedRows;
+  return camelize(affectedRows);
 };
 
 module.exports = {

@@ -26,9 +26,9 @@ const deleteSale = async (req, res) => {
 };
 
 const updateQuantitySale = async (req, res) => {
-  const { productId } = req.params;
+  const { productId, saleId } = req.params;
   const { quantity } = req.body;
-  const updateSaleService = await salesServices.updateQuantitySale(productId, quantity);
+  const updateSaleService = await salesServices.updateQuantitySale(productId, quantity, saleId);
   const { status, message } = updateSaleService;
   return res.status(status).json(message);
 };

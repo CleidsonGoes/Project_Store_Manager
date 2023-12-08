@@ -31,11 +31,21 @@ const oneSaleWithoutQuantity = (req, res, next) => {
     return res.status(404).json({ message: 'Product not found' });
   }
   next();
-}; 
+};
+
+// const notFoundReqFieldQuantity = (req, res, next) => {
+//   const quantityField = req.body;
+//   if (!quantityField) {
+//     return res.status(400).json({ message: { message: '"quantity" is required' },
+//     });
+//   }
+//   next();
+// };
 
 module.exports = {
   notFoundFieldProductId,
   notFoundFieldQuantity,
   fieldQuantityEqualZero,
   oneSaleWithoutQuantity,
+  // notFoundReqFieldQuantity,
 };
