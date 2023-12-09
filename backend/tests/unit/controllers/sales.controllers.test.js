@@ -55,4 +55,18 @@ describe('Testando camada Controller', function () {
     expect(res.status).to.have.been.calledWith(204);
     expect(res.json).to.have.been.calledWith(undefined);
   });
+  it('Testando todas as vendas, rota GET/', async function () {
+    const req = {};
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    sinon.stub(services, 'getAllSalesServices').resolves({ status: 200, message: mocks.getAllSales });
+
+    await controllers.getAllSalesController(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(mocks.getAllSales);
+  });
 });

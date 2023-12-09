@@ -25,17 +25,8 @@ const fieldQuantityEqualZero = (req, res, next) => {
   next();
 };
 
-const oneSaleWithoutQuantity = (req, res, next) => {
-  const sales = req.body;
-  if (sales.length === 1 && sales[0].quantity === 0) {
-    return res.status(404).json({ message: 'Product not found' });
-  }
-  next();
-};
-
 module.exports = {
   notFoundFieldProductId,
   notFoundFieldQuantity,
   fieldQuantityEqualZero,
-  oneSaleWithoutQuantity,
 };

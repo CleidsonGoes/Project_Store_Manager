@@ -41,14 +41,4 @@ describe('Testando camada Controller', function () {
     salesMiddlewares.notFoundFieldQuantity(req, res, next); // passe o `next` para o middleware junto com o `req` e `res`
     expect(next).to.have.been.calledWith(); // verifica se o `next` foi chamado pelo middleware
   });
-  it('testando middleware "oneSaleWithoutQuantity", rota POST', async function () {
-    const req = { body: mocks.reqCreateSales };
-    const res = {};
-    const next = sinon.stub().returns(); // crie um stub
-
-    res.status = sinon.stub().returnsThis();
-    res.json = sinon.stub();
-    salesMiddlewares.oneSaleWithoutQuantity(req, res, next); // passe o `next` para o middleware junto com o `req` e `res`
-    expect(next).to.have.been.calledWith(); // verifica se o `next` foi chamado pelo middleware
-  });
 });

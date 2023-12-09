@@ -58,6 +58,7 @@ describe('Sales API', function () {
     expect(result).to.be.an('number');
   });
   // it('Testando atualização de qtd vendidas, rota /:saleId/products/:productId/quantity', async function () {    
+  
   //   const result = await model.updateQuantitySale(1, 20);
 
   //   expect(result).to.be.been.calledWith();

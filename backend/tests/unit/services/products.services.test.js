@@ -47,6 +47,18 @@ describe('Testando camada Service', function () {
     expect(result.status).to.be.equal(201);
     expect(result.message).to.be.deep.equal({ id: undefined, name: mocks.insertProduct.name });
   });
+  it('Testando criação de produtos sem nome, rota POST', async function () {
+    const result = await services.createProduct({});
+
+    expect(result.status).to.be.equal(400);
+    expect(result.message).to.be.deep.equal({ message: '"name" is required' });
+  });
+  it('Testando criação de produtos c/ nome c/ 5 ou + caracteres, rota POST', async function () {
+    const result = await services.createProduct({ name: 'Capa' });
+
+    expect(result.status).to.be.equal(422);
+    expect(result.message).to.be.deep.equal({ message: '"name" length must be at least 5 characters long' });
+  });
   it('Testando atualização de produtos rota PUT/id', async function () {
     sinon.stub(models, 'queryProductById').resolves([[mocks.getByIdProducts]]);
     sinon.stub(models, 'updateProduct').resolves([{ affectedRows: 1 }]);
@@ -55,6 +67,26 @@ describe('Testando camada Service', function () {
 
     expect(result.status).to.be.deep.equal(200);
     expect(result.message).to.be.deep.equal({ id: [{ affectedRows: 1 }], name: mocks.reqUpdateProduct.name });
+  });
+  it('Testando atualização de produtos inexistente rota PUT/id', async function () {
+    sinon.stub(models, 'queryProductById').resolves();
+
+    const result = await services.updateProduct(99, mocks.reqUpdateProduct);
+
+    expect(result.status).to.be.deep.equal(404);
+    expect(result.message).to.be.deep.equal({ message: 'Product not found' });
+  });
+  it('Testando atualização de produtos sem nome rota PUT/id', async function () {
+    const result = await services.updateProduct(1, {});
+
+    expect(result.status).to.be.deep.equal(400);
+    expect(result.message).to.be.deep.equal({ message: '"name" is required' });
+  });
+  it('Testando atualização de produtos c/ nome c/ 5 ou + caracteres, rota PUT/id', async function () {
+    const result = await services.updateProduct(1, { name: 'Café' });
+
+    expect(result.status).to.be.deep.equal(422);
+    expect(result.message).to.be.deep.equal({ message: '"name" length must be at least 5 characters long' });
   });
   it('Testando remoção de produto, rota DELETE/id', async function () {
     sinon.stub(models, 'queryProductById').resolves(mocks.getByIdProducts);
